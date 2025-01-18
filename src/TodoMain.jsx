@@ -36,13 +36,32 @@ function TodoMain() {
     const addNewTodo = ({description, priority}) => {
         setTodos(prevTodos => {
             return [...prevTodos, {description, priority, isDone: false}]
-        })
+        })       
     }
+
+    const toggleDone = (todoIndex) => {
+        console.log('klikiti rida number ' + todoIndex)
+        setTodos( prevTodos =>  prevTodos.map( (todo, index) => {
+            if (todoIndex != index) {
+                return todo;
+            }
+            return {...todo, isDone: !todo.isDone}
+        }) )
+    }
+
+    const deleteTodo = (todoIndex) => {
+        setTodos( prevTodos => prevTodos.filter( (todo, index) => index !== todoIndex ))
+    }
+
     return (
         <div className="container">
             <h1>My todo list</h1>
             <AddTodo addNewTodo={addNewTodo} />
-            <TodoList todos={todos} />
+            <TodoList 
+                todos={todos} 
+                toggleDone={toggleDone} 
+                deleteTodo={deleteTodo}
+            />
         </div>
     )
 }
